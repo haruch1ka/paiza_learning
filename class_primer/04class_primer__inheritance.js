@@ -1,92 +1,96 @@
 const testInput = [
-  "2 5",
-  "59",
-  "5", 
-  "2 food 1223",
-  "1 alcohol 4461",
-  "1 alcohol 457",
-  "1 alcohol 1438",
-  "2 softdrink 1581"
-    ];
-
+  "7 7",
+  "62",
+  "91",
+  "29",
+  "33",
+  "79",
+  "15",
+  "91",
+  "2 food 3134",
+  "7 alcohol 2181",
+  "6 softdrink 4631",
+  "3 softdrink 3120",
+  "4 softdrink 4004",
+  "6 alcohol 1468",
+  "6 alcohol 1245",
+];
 function main(input) {
   let inputArr = input.split("\n"); //入力を改行文字で分割
   // let inputArr = testInput;
   inputArr = inputArr.filter(Boolean); //余計な空白を削除
   let inputNum = inputArr.shift(); //一番上の行を取り出す。
-  const inputData = inputArr.map((e) => e.split(" ")); //一番上の行以外の行をそれぞれ空白で分割する
-
-  const enployeeData = [];
-
-  const intoroduction_branch = (Arr) => {
-    const input = Arr;
-    switch (input[0]) {
-      case "make": {
-        enployeeData.push(make_employee(input[1], input[2]));
-        break;
+  let inputData = inputArr.map((e) => e.split(" ")); //一番上の行以外の行をそれぞれ空白で分割する
+  inputData = inputData.map((e) => {
+    return e.map((e) => {
+      if (e.match(/^[0-9]+$/)) {
+        return Number(e);
+      } else {
+        return e;
       }
-      case "getnum": {
-        const index = input[1];
-        const tar = enployeeData[index - 1];
-        console.log(tar.getnum());
-        break;
-      }
-      case "getname": {
-        const index = input[1];
-        const tar = enployeeData[index - 1];
-        console.log(tar.getname());
-        break;
-      }
-
-      case "change_num": {
-        const index = input[1];
-        const tar = enployeeData[index - 1];
-        tar.changeNum(input[2]);
-        break;
-      }
-
-      case "change_name": {
-        const index = input[1];
-        const tar = enployeeData[index - 1];
-        tar.changeName(input[2]);
-      }
-      default:
-        break;
-    }
-  };
-  inputData.forEach((e) => {
-    intoroduction_branch(e);
+    });
   });
 
+  let inputNumArr = inputNum.split(" ");
+  inputNumArr = inputNumArr.map((e) => Number(e));
+
+  const instance_array = [];
+
+  for (let i = 0; i < inputNumArr[0]; i++) {
+    let c = make_customer(inputData[i][0]);
+    instance_array.push(c);
+  }
+  for (let i = inputNumArr[0]; i < inputNumArr[0] + inputNumArr[1]; i++) {
+    let input = inputData[i];
+    intoroduction_branch(instance_array, input);
+  }
+
   //dispData
-  // Alldisp(enployeeData);
+  Alldisp(instance_array);
 }
-class employee {
-  constructor(number, name) {
-    this.number = number;
-    this.name = name;
+class customer {
+  constructor(age) {
+    this.age = age;
+    this.sum = 0;
   }
-  getnum() {
-    return this.number;
-  }
-  getname() {
-    return this.name;
-  }
-  changeNum(number) {
-    this.number = number;
-  }
-  changeName(name) {
-    this.name = name;
+  order(order, price) {
+    let current_price = price;
+    if (order == "alcohol") {
+      current_price = 0;
+    }
+    this.sum += current_price;
   }
 }
 
-function make_employee(number, name) {
-  return new employee(number, name);
+class adult extends customer {
+  #is_order_alcohol = false;
+  order(order, price) {
+    let current_price = price;
+    if (order == "alcohol") {
+      this.#is_order_alcohol = true;
+    }
+    if (this.#is_order_alcohol && order == "food") {
+      current_price = current_price - 200;
+    }
+    this.sum += current_price;
+  }
 }
+
+function make_customer(num_age) {
+  if (num_age < 20) {
+    return new customer(num_age);
+  } else {
+    return new adult(num_age);
+  }
+}
+
+const intoroduction_branch = (data, input) => {
+  data[input[0] - 1].order(input[1], input[2]);
+};
 
 function Alldisp(Arr) {
   Arr.forEach((element) => {
-    console.log(element);
+    console.log(element.sum);
   });
 }
 
