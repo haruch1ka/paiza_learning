@@ -95,6 +95,10 @@ const intoroduction_branch = (data, input) => {
     data[input[0] - 1].order_softdrink(input[2]);
   } else if (input[1] == "alcohol") {
     data[input[0] - 1].order_alcohol(input[2]);
+  } else if (input[1] == 0) {
+    data[input[0] - 1].order_alcohol(500);
+  } else {
+    throw new Error("注文の入力の例外");
   }
   // data[input[0] - 1].order(input[1], input[2]);
 };
