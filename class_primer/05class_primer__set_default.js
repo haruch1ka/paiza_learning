@@ -38,14 +38,14 @@ class Input {
   }
   shiftTop() {
     this.topArray = this.inputDataArray.shift(); //一番上の行を取り出す。
-    console.log(this.topArray);
+    // console.log(this.topArray);
   }
 }
 
 function main(inputstr) {
   let input = new Input(inputstr);
   input.shiftTop();
-  console.log(input.inputDataArray);
+  // console.log(input.inputDataArray);
 
   const customersArray = [];
 
@@ -58,11 +58,10 @@ function main(inputstr) {
     let order = input.inputDataArray[i];
     intoroduction_branch(customersArray, order);
   }
-
-  //dispData
-  Alldisp(customersArray);
+  console.log(customer.kaikei_num);
 }
 class customer {
+  static kaikei_num = 0;
   constructor(age) {
     this.age = age;
     this.sum = 0;
@@ -74,6 +73,10 @@ class customer {
     this.sum += price;
   }
   order_alcohol(price) {}
+  kaikei() {
+    console.log(this.sum);
+    customer.kaikei_num++;
+  }
 }
 
 class adult extends customer {
@@ -106,31 +109,23 @@ const intoroduction_branch = (data, input) => {
   const customer_index = input[0] - 1;
   const customer_order = input[1];
   if (customer_order == "food") {
-    console.log("food");
-    // data[customer_index].order_food(input[2]);
+    // console.log("food");
+    data[customer_index].order_food(input[2]);
   } else if (customer_order == "softdrink") {
-    console.log("softdrink");
-    // data[customer_index].order_softdrink(input[2]);
+    // console.log("softdrink");
+    data[customer_index].order_softdrink(input[2]);
   } else if (customer_order == "alcohol") {
-    console.log("alcohol");
-    // data[customer_index].order_alcohol(input[2]);
+    // console.log("alcohol");
+    data[customer_index].order_alcohol(input[2]);
   } else if (customer_order == 0) {
-    console.log("beer");
-    // data[customer_index].order_alcohol(500);
+    // console.log("beer");
+    data[customer_index].order_alcohol(500);
   } else if (customer_order == "A") {
-    console.log("okaikei");
+    data[customer_index].kaikei();
   } else {
     throw new Error("注文の入力の例外");
   }
-
-  // data[customer_index].order(customer_order, input[2]);
 };
 
-// function Alldisp(Arr) {
-//   Arr.forEach((element) => {
-//     console.log(element.sum);
-//   });
-// }
-
-main(testinput);
-// main(require("fs").readFileSync("/dev/stdin", "utf8"));
+// main(testinput);
+main(require("fs").readFileSync("/dev/stdin", "utf8"));
