@@ -1,52 +1,66 @@
-const testInput = [
-  "7 7",
-  "62",
-  "91",
-  "29",
-  "33",
-  "79",
-  "15",
-  "91",
-  "2 food 3134",
-  "7 alcohol 2181",
-  "6 softdrink 4631",
-  "3 softdrink 3120",
-  "4 softdrink 4004",
-  "6 alcohol 1468",
-  "6 alcohol 1245",
-];
-function main(input) {
-  let inputArr = input.split("\n"); //入力を改行文字で分割
-  // let inputArr = testInput;
-  inputArr = inputArr.filter(Boolean); //余計な空白を削除
-  let inputNum = inputArr.shift(); //一番上の行を取り出す。
-  let inputData = inputArr.map((e) => e.split(" ")); //一番上の行以外の行をそれぞれ空白で分割する
-  inputData = inputData.map((e) => {
-    return e.map((e) => {
-      if (e.match(/^[0-9]+$/)) {
-        return Number(e);
-      } else {
-        return e;
-      }
+let testinput = `7 12
+68
+85
+57
+32
+90
+74
+7
+2 0
+4 A
+3 0
+1 A
+4 softdrink 3781
+6 softdrink 3010
+4 0
+5 alcohol 1018
+1 0
+1 softdrink 376
+1 softdrink 797
+2 alcohol 4284
+`;
+class Input {
+  inputDataArray;
+  topArray = null;
+  constructor(str) {
+    let inputArr = str.split("\n"); //入力を改行文字で分割
+    inputArr = inputArr.filter(Boolean); //余計な空白を削除
+    let inputData = inputArr.map((e) => e.split(" ")); //一番上の行以外の行をそれぞれ空白で分割する
+    this.inputDataArray = inputData.map((e) => {
+      return e.map((e) => {
+        if (e.match(/^[0-9]+$/)) {
+          return Number(e);
+        } else {
+          return e;
+        }
+      });
     });
-  });
-
-  let inputNumArr = inputNum.split(" ");
-  inputNumArr = inputNumArr.map((e) => Number(e));
-
-  const instance_array = [];
-
-  for (let i = 0; i < inputNumArr[0]; i++) {
-    let c = make_customer(inputData[i][0]);
-    instance_array.push(c);
   }
-  for (let i = inputNumArr[0]; i < inputNumArr[0] + inputNumArr[1]; i++) {
-    let input = inputData[i];
-    intoroduction_branch(instance_array, input);
+  shiftTop() {
+    this.topArray = this.inputDataArray.shift(); //一番上の行を取り出す。
+    console.log(this.topArray);
+  }
+}
+
+function main(inputstr) {
+  let input = new Input(inputstr);
+  input.shiftTop();
+  console.log(input.inputDataArray);
+
+  const customersArray = [];
+
+  const customerlength = input.topArray[0];
+  for (let i = 0; i < input.topArray[0]; i++) {
+    let c = make_customer(input.inputDataArray[i][0]);
+    customersArray.push(c);
+  }
+  for (let i = input.topArray[0]; i < input.inputDataArray.length; i++) {
+    let order = input.inputDataArray[i];
+    intoroduction_branch(customersArray, order);
   }
 
   //dispData
-  Alldisp(instance_array);
+  Alldisp(customersArray);
 }
 class customer {
   constructor(age) {
@@ -89,24 +103,34 @@ function make_customer(num_age) {
 }
 
 const intoroduction_branch = (data, input) => {
-  if (input[1] == "food") {
-    data[input[0] - 1].order_food(input[2]);
-  } else if (input[1] == "softdrink") {
-    data[input[0] - 1].order_softdrink(input[2]);
-  } else if (input[1] == "alcohol") {
-    data[input[0] - 1].order_alcohol(input[2]);
-  } else if (input[1] == 0) {
-    data[input[0] - 1].order_alcohol(500);
+  const customer_index = input[0] - 1;
+  const customer_order = input[1];
+  if (customer_order == "food") {
+    console.log("food");
+    // data[customer_index].order_food(input[2]);
+  } else if (customer_order == "softdrink") {
+    console.log("softdrink");
+    // data[customer_index].order_softdrink(input[2]);
+  } else if (customer_order == "alcohol") {
+    console.log("alcohol");
+    // data[customer_index].order_alcohol(input[2]);
+  } else if (customer_order == 0) {
+    console.log("beer");
+    // data[customer_index].order_alcohol(500);
+  } else if (customer_order == "A") {
+    console.log("okaikei");
   } else {
     throw new Error("注文の入力の例外");
   }
-  // data[input[0] - 1].order(input[1], input[2]);
+
+  // data[customer_index].order(customer_order, input[2]);
 };
 
-function Alldisp(Arr) {
-  Arr.forEach((element) => {
-    console.log(element.sum);
-  });
-}
+// function Alldisp(Arr) {
+//   Arr.forEach((element) => {
+//     console.log(element.sum);
+//   });
+// }
 
-main(require("fs").readFileSync("/dev/stdin", "utf8"));
+main(testinput);
+// main(require("fs").readFileSync("/dev/stdin", "utf8"));
