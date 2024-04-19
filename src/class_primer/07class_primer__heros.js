@@ -1,12 +1,8 @@
-let testinput = `4 4 1
-p 2 4
-a 3 1
-i 4 2
-z 1 2
-1
-1
-1
-2`;
+let testinput = `1 3
+23 128 533 552 44 69 420
+1 muscle_training 565 241
+1 study 132
+1 levelup 379 585 4 145 276 8`;
 class Input {
 	inputDataArray;
 	topArray = null;
