@@ -1,15 +1,28 @@
 {
-  "name": "paiza_learning",
+  "name": "paiza_learning_ts",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "tsc": "eslint && tsc",
+    "lint": "eslint",
+    "fix": "prettier",
+    "test": "vitest"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "typescript": "^5.4.3"
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
+    "@typescript-eslint/eslint-plugin": "^5.52.0",
+    "@typescript-eslint/parser": "^5.52.0",
+    "@vitejs/plugin-react": "^3.1.0",
+    "eslint": "^8.34.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react": "^7.32.2",
+    "prettier": "^3.2.5",
+    "typescript": "^4.9.3",
+    "vite": "^4.1.0"
   }
 }

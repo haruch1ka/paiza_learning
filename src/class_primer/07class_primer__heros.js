@@ -49,44 +49,12 @@ class point {
 }
 
 function main(inputStr) {
-	// console.log(inputStr);
 	let input = new Input(inputStr);
 	input.shiftTop();
 	let times = input.topArray;
 
 	// console.log(times);
-
-	let pointInputArr = [];
-	let rootchoiceArr = [];
-
-	for (let i = 0; i < times[0]; i++) {
-		pointInputArr.push(input.inputDataArray[i]);
-	}
-	for (let i = times[0]; i < times[0] + times[1]; i++) {
-		rootchoiceArr.push(input.inputDataArray[i][0]);
-	}
-
-	const pointArr = makePoint(pointInputArr);
-
-	let currentPoint = times[2];
-	let t, p;
-	rootchoiceArr.forEach((e) => {
-		t = pointArr[currentPoint - 1].getText();
-		p = pointArr[currentPoint - 1].getPoint(e);
-		currentPoint = p;
-	});
-	pointArr[currentPoint - 1].getText();
-
-	console.log(point.word);
 }
 
-// main(testinput);
-main(require("fs").readFileSync("/dev/stdin", "utf8"));
-
-function makePoint(array) {
-	let res = [];
-	array.forEach((e) => {
-		res.push(new point(e[0], e[1], e[2]));
-	});
-	return res;
-}
+main(testinput);
+// main(require("fs").readFileSync("/dev/stdin", "utf8"));
