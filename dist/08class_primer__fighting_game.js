@@ -1,3 +1,4 @@
+'use strict'
 const testinput = `3 6
 10 1 1 2 2 3 3
 10 0 0 6 1 7 2
@@ -9,24 +10,25 @@ const testinput = `3 6
 2 3 3 1
 1 2 3 2`
 class Input {
-  public inputDataArray: string[] = []
-  public topItem = ''
-  constructor(str: string, splitby = '\n') {
-    const inputArr: string[] = str.split(splitby)
+  constructor(str, splitby = '\n') {
+    this.inputDataArray = []
+    this.topItem = ''
+    const inputArr = str.split(splitby)
     this.inputDataArray = inputArr.filter(Boolean)
   }
-
-  shiftTop(stringOrReg: string | RegExp = ' '): (string | number)[] {
+  shiftTop(stringOrReg = ' ') {
     const shifted = this.inputDataArray.shift()
-    const splited = shifted?.split(stringOrReg)
-
+    const splited =
+      shifted === null || shifted === void 0
+        ? void 0
+        : shifted.split(stringOrReg)
     if (typeof splited === 'undefined') {
       return []
     } else {
       return this.stringToNum(splited)
     }
   }
-  stringToNum(stringArr: string[]): (string | number)[] {
+  stringToNum(stringArr) {
     return stringArr.map((e) => {
       if (e.match(/^[0-9]+$/)) {
         return Number(e)
@@ -36,19 +38,15 @@ class Input {
     })
   }
 }
-
 class Player {
-  public name: number
-  public hp: number
-  public skill: Skill[]
-  constructor(hp: number, Skill: Skill[], name: number) {
+  constructor(hp, Skill, name) {
     this.hp = hp
     this.skill = Skill
     this.name = name
   }
   //プレイヤーは攻撃メソッドとバフメソッドをもつ
-  action(skill_num: number): Skill {
-    const myskill: Skill = this.skill[skill_num - 1]
+  action(skill_num) {
+    const myskill = this.skill[skill_num - 1]
     if (myskill.isBuff) {
       this.buff()
     }
@@ -64,17 +62,14 @@ class Player {
       }
     })
   }
-  damage(damage: number) {
+  damage(damage) {
     if (this.hp <= 0) return
     this.hp -= damage
   }
 }
 //技クラス
 class Skill {
-  public power: number
-  public flame: number
-  public isBuff: boolean
-  constructor(power: number, flame: number) {
+  constructor(power, flame) {
     if (power === 0 && flame === 0) {
       this.isBuff = true
     } else {
@@ -84,27 +79,24 @@ class Skill {
     this.flame = flame
   }
 }
-
-function main(inputStr: string) {
+function main(inputStr) {
   const input = new Input(inputStr)
-  const times = <number[]>input.shiftTop()
-
-  const inputorderArray: (number | string)[][] = []
+  const times = input.shiftTop()
+  const inputorderArray = []
   input.inputDataArray.forEach((e) => {
     const formatted = input.stringToNum(new Input(e, ' ').inputDataArray)
     inputorderArray.push(formatted)
   })
-
   //プレイヤーインスタンスの作成
-  const playerArray: Player[] = []
+  const playerArray = []
   for (let i = 0; i < times[0]; i++) {
-    const hp = inputorderArray[i][0] as number
-    const skillArray: Skill[] = []
+    const hp = inputorderArray[i][0]
+    const skillArray = []
     for (let j = 0; j < inputorderArray[i].length; j++) {
       if (j !== 0 && j % 2 !== 0) {
         const skill = new Skill(
-          inputorderArray[i][j] as number,
-          inputorderArray[i][j + 1] as number,
+          inputorderArray[i][j],
+          inputorderArray[i][j + 1],
         )
         skillArray.push(skill)
       }
@@ -113,14 +105,12 @@ function main(inputStr: string) {
     playerArray.push(player)
   }
   // console.log(playerArray)
-
   //プレイヤーの攻撃
   for (let i = times[0]; i < times[0] + times[1]; i++) {
-    const attackker = playerArray[(inputorderArray[i][0] as number) - 1]
-    const attackerSkill = attackker.action(inputorderArray[i][1] as number)
-    const defense = playerArray[(inputorderArray[i][2] as number) - 1]
-    const diffenceSkill = defense.action(inputorderArray[i][3] as number)
-
+    const attackker = playerArray[inputorderArray[i][0] - 1]
+    const attackerSkill = attackker.action(inputorderArray[i][1])
+    const defense = playerArray[inputorderArray[i][2] - 1]
+    const diffenceSkill = defense.action(inputorderArray[i][3])
     if (attackerSkill !== null && diffenceSkill !== null) {
       if (attackerSkill.flame > diffenceSkill.flame) {
         defense.damage(attackerSkill.power)
@@ -129,7 +119,6 @@ function main(inputStr: string) {
       }
     }
   }
-
   let count = 0
   for (let i = 0; i < playerArray.length; i++) {
     if (playerArray[i].hp > 0) {
@@ -138,5 +127,4 @@ function main(inputStr: string) {
   }
   console.log(count)
 }
-
-main(testinput)
+main(require('fs').readFileSync('/dev/stdin', 'utf8'))
