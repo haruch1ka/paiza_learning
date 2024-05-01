@@ -9,6 +9,6 @@
     "rootDir": "./src",
     "outDir": "./dist"
   },
-  "include": ["src/08class_primer__fighting_game.ts"],
+  "include": ["src/*.ts"],
   "exclude": ["node_modules", "**/*.test.ts", "**/*test.tsx", "dist"]
 }
