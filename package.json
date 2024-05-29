@@ -8,7 +8,7 @@
     "lint": "eslint",
     "fix": "prettier",
     "test": "vitest",
-    "dev": "ts-node-dev --respawn src/09class_primer__super_super_supercar.ts"
+    "dev": "ts-node-dev --respawn src/01sort_naive__insertion.ts"
   },
   "keywords": [],
   "author": "",
