@@ -1,24 +1,26 @@
+'use strict'
 const testinput = `5
-4 1 3 2 5`
+4 1 3 5 2`
 class Input {
-  public inputDataArray: string[] = []
-  public topItem = ''
-  constructor(str: string, splitby = '\n') {
-    const inputArr: string[] = str.split(splitby)
+  constructor(str, splitby = '\n') {
+    this.inputDataArray = []
+    this.topItem = ''
+    const inputArr = str.split(splitby)
     this.inputDataArray = inputArr.filter(Boolean)
   }
-
-  shiftTop(stringOrReg: string | RegExp = ' '): (string | number)[] {
+  shiftTop(stringOrReg = ' ') {
     const shifted = this.inputDataArray.shift()
-    const splited = shifted?.split(stringOrReg)
-
+    const splited =
+      shifted === null || shifted === void 0
+        ? void 0
+        : shifted.split(stringOrReg)
     if (typeof splited === 'undefined') {
       return []
     } else {
       return this.stringToNum(splited)
     }
   }
-  stringToNum(stringArr: string[]): (string | number)[] {
+  stringToNum(stringArr) {
     return stringArr.map((e) => {
       if (e.match(/^-?[0-9]+$/)) {
         return Number(e)
@@ -28,37 +30,30 @@ class Input {
     })
   }
 }
-
-function main(inputStr: string) {
+function main(inputStr) {
   const input = new Input(inputStr)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const _times = <number[]>input.shiftTop()
-
-  const inputorderArray: (number | string)[][] = []
+  const _times = input.shiftTop()
+  const inputorderArray = []
   input.inputDataArray.forEach((e) => {
     const formatted = input.stringToNum(new Input(e, ' ').inputDataArray)
     inputorderArray.push(formatted)
   })
-
   const sortTargetArray = inputorderArray[0]
-  selectionSort(sortTargetArray as number[])
+  selectionSort(sortTargetArray)
 }
-
-function selectionSort(arr: number[]) {
+function selectionSort(arr) {
   const resArr = arr
-  for (let i = 0; i < resArr.length - 2; i++) {
+  for (let i = 0; i < resArr.length - 1; i++) {
     let minIndex = i
-    for (let j = i + 1; j < resArr.length - 1; j++) {
+    for (let j = i + 1; j < resArr.length; j++) {
       if (resArr[j] < resArr[minIndex]) {
         minIndex = j
       }
-      //配列の中身を入れ替える
-
-      ;[resArr[i], resArr[minIndex]] = [resArr[minIndex], resArr[i]]
     }
+    ;[resArr[i], resArr[minIndex]] = [resArr[minIndex], resArr[i]]
     console.log(resArr.join(' '))
   }
 }
-
-main(testinput)
-// main(require("fs").readFileSync("/dev/stdin", "utf8"));
+// main(testinput);
+main(require('fs').readFileSync('/dev/stdin', 'utf8'))
