@@ -1,5 +1,5 @@
 const testinput = `5
--9247 8112 1394 56 -574`
+4 1 3 2 5`
 class Input {
   public inputDataArray: string[] = []
   public topItem = ''
@@ -41,21 +41,22 @@ function main(inputStr: string) {
   })
 
   const sortTargetArray = inputorderArray[0]
-  insertionSort(sortTargetArray as number[])
+  selectionSort(sortTargetArray as number[])
 }
 
-function insertionSort(arr: number[]) {
+function selectionSort(arr: number[]) {
   const resArr = arr
-  for (let i = 1; i < resArr.length; i++) {
-    let j = 0
-    const tmp = resArr[i]
-    for (j = i - 1; j >= 0 && resArr[j] > tmp; j--) {
-      resArr[j + 1] = resArr[j]
-    }
-    resArr[j + 1] = tmp
+  for (let i = 0; i < resArr.length - 2; i++) {
+    let minIndex = i
+    for (let j = i + 1; j < resArr.length - 1; j++) {
+      if (resArr[j] < resArr[minIndex]) {
+        minIndex = j
+      }
+      //配列の中身を入れ替える
 
-    const res = resArr.join(' ')
-    console.log(res)
+      ;[resArr[i], resArr[minIndex]] = [resArr[minIndex], resArr[i]]
+    }
+    console.log(resArr.join(' '))
   }
 }
 
