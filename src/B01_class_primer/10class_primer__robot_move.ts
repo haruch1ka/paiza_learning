@@ -135,7 +135,7 @@ function main(inputStr: string) {
     const formatted = input.stringToNum(new Input(e, ' ').inputDataArray)
     inputorderArray.push(formatted)
   })
-  const maxDistance: number[] = [times[0], times[1]]
+  // const maxDistance: number[] = [times[0], times[1]]
   const robotNumber: number = times[2]
   const robotMoveNumber: number = times[3]
 
