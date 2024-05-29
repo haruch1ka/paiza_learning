@@ -8,7 +8,7 @@
     "lint": "eslint",
     "fix": "prettier",
     "test": "vitest",
-    "dev": "ts-node-dev --respawn src/active/02sort_naive__selection.ts"
+    "dev": "ts-node-dev --respawn src/active/10class_primer__robot_move.ts"
   },
   "keywords": [],
   "author": "",
