@@ -1,5 +1,7 @@
-const testinput = `5
-4 1 3 5 2`
+const testinput = `10
+7 6 10 2 5 4 8 3 9 1
+2
+4 1`
 class Input {
   public inputDataArray: string[] = []
   public topItem = ''
@@ -39,21 +41,31 @@ function main(inputStr: string) {
     const formatted = input.stringToNum(new Input(e, ' ').inputDataArray)
     inputorderArray.push(formatted)
   })
+  const times = inputorderArray[2]
 
   const sortTargetArray = inputorderArray[0]
-  bubleSort(sortTargetArray as number[])
+
+  times.forEach((element) => {
+    insertionSort(sortTargetArray as number[], element as number)
+  })
+  // console.log(sortTargetArray.join(' '))
 }
 
-function bubleSort(arr: number[]) {
-  const resArr = arr
-  for (let i = 0; i < resArr.length - 1; i++) {
-    for (let j = resArr.length - 1; i < j; j--) {
-      if (resArr[j] < resArr[j - 1]) {
-        ;[resArr[j], resArr[j - 1]] = [resArr[j - 1], resArr[j]]
-      }
+function insertionSort(arr: number[], h: number) {
+  let num_of_move = 0
+  for (let i = h; i < arr.length; i++) {
+    const temp = arr[i]
+    let j = i - h
+    // console.log('temp', temp)
+    // console.log('arr[j]', arr[j])
+    while (j >= 0 && arr[j] > temp) {
+      arr[j + h] = arr[j]
+      j -= h
+      num_of_move++
     }
-    console.log(resArr.join(' '))
+    arr[j + h] = temp
   }
+  console.log(num_of_move)
 }
 
 main(testinput)

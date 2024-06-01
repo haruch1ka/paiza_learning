@@ -8,7 +8,7 @@
     "lint": "eslint",
     "fix": "prettier",
     "test": "vitest",
-    "dev": "ts-node-dev --respawn src/active/03sort_naive__bubble.ts"
+    "dev": "ts-node-dev --respawn src/active/dev.ts"
   },
   "keywords": [],
   "author": "",
