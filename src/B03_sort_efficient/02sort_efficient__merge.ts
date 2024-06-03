@@ -39,7 +39,7 @@ function main(inputStr: string) {
     const formatted = input.stringToNum(new Input(e, ' ').inputDataArray)
     inputorderArray.push(formatted)
   })
-  const times = inputorderArray[2]
+  // const times = inputorderArray[2]
 
   const sortTargetArray = inputorderArray[0]
 
