@@ -1,5 +1,11 @@
 const testinput = `10
-7 6 10 2 5 4 8 3 9 1`
+45 62 11 81 75 90 13 2 97 32
+5
+90
+75
+50
+1
+63`
 class Input {
   public inputDataArray: string[] = []
   public topItem = ''
@@ -41,62 +47,28 @@ function main(inputStr: string) {
   })
   const times = inputorderArray[2]
 
-  const sortTargetArray = inputorderArray[0]
+  const sortTargetArray = inputorderArray.shift() as number[]
+  const targetAllay: number[] = inputorderArray.shift() as number[]
 
-  function merge_sort(A: number[], left: number, right: number) {
-    if (left + 1 < right) {
-      const mid = Math.floor((left + right) / 2)
-      merge_sort(A, left, mid)
-      merge_sort(A, mid, right)
-      marge(A, left, mid, right)
-    }
-  }
-  merge_sort(sortTargetArray as number[], 0, sortTargetArray.length)
-  console.log(sortTargetArray.join(' '))
+  sortTargetArray.sort(function(a, b) { return a - b })
+  inputorderArray.forEach((element) => {
+    const searched = binalySearch(element[0] as number, sortTargetArray)
+    console.log(sortTargetArray.length - searched)
+  })
 }
 
-function marge(A: number[], left: number, mid: number, right: number) {
-  const nl = mid - left
-  const nr = right - mid
-
-  const L: number[] = []
-  const R: number[] = []
-
-  for (let i = 0; i < nl; i++) {
-    L[i] = A[left + i]
-  }
-  for (let i = 0; i < nr; i++) {
-    R[i] = A[mid + i]
-  }
-  // console.log('A', A)
-  // console.log('L', L)
-  // console.log('R', R)
-  // console.log('--------------------')
-  // console.log('left', left)
-  // console.log('mid', mid)
-  // console.log('right', right)
-  L[nl] = Infinity
-  R[nr] = Infinity
-
-  let Lindex = 0
-  let Rindex = 0
-
-  for (let i = left; i < right; i++) {
-    if (L[Lindex] < R[Rindex]) {
-      // console.log(L[Lindex], 'vs', R[Rindex])
-      A[i] = L[Lindex]
-      Lindex++
-    } else {
-      // console.log(L[Lindex], 'vs', R[Rindex])
-      A[i] = R[Rindex]
-      Rindex++
-      count++
-    }
-  }
-  // console.log('--------------------')
-}
-let count = 0
 main(testinput)
-console.log(count)
-
+function binalySearch(target: number, array: number[]): number {
+  let left = 0
+  let right = array.length -1 
+  while (left < right) {
+    const mid = Math.floor((left + right) /2)
+    if(array[mid] < target) {
+      left = mid + 1 
+    } else {
+      right = mid 
+    }
+  }
+   return right
+}
 // main(require("fs").readFileSync("/dev/stdin", "utf8"));
