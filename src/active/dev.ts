@@ -1,5 +1,11 @@
 const testinput = `10
-7 6 10 2 5 1 8 3 9 4`
+3 11 18 25 40 58 69 81 88 99
+5
+11
+100
+2
+41
+69`
 class Input {
   public inputDataArray: string[] = []
   public topItem = ''
@@ -41,43 +47,34 @@ function main(inputStr: string) {
   })
   // const times = inputorderArray[2]
 
-  const sortTargetArray = inputorderArray[0]
-  quickSort(sortTargetArray as number[], 0, sortTargetArray.length)
-  console.log(sortTargetArray.join(' '))
-}
-function quickSort(A: number[], left: number, right: number) {
-  console.log('-------------------')
-  console.log(A.join(' '))
-  console.log('left', left, 'arrLength', right)
-  if (left + 1 >= right) {
-    return
-  }
-  const pivot = A[right - 1]
-  let cur_index = left
-  console.log('pivot', pivot)
-  console.log('cur_index', cur_index)
+  const searchDataBase = inputorderArray.shift()
+  const searchTargetLength: number[] = inputorderArray.shift() as number[]
+  //number[]として扱う為にアサーションをする
 
-  for (let i = left; i < right - 1; i++) {
-    console.log('i', i)
-    console.log(' ', 'A[i]', A[i], 'pivot', pivot)
-    if (A[i] < pivot) {
-      ;[A[cur_index], A[i]] = [A[i], A[cur_index]]
-      console.log(' ', 'A[cur_index]', A[cur_index], 'A[i]', A[i])
-      console.log(' ', A.join(' '))
-      cur_index++
-      count++
+  const searchTarget = inputorderArray as number[][]
+
+  const search = binarySearch(searchDataBase as number[], 1)
+
+  searchTarget.forEach((element) => {
+    console.log(binarySearch(searchDataBase as number[], element[0]))
+  })
+}
+
+function binarySearch(arr: number[], target: number): boolean {
+  let left = 0
+  let right = arr.length - 1
+  while (left <= right) {
+    const mid = Math.floor((left + right) / 2)
+    if (arr[mid] === target) {
+      return true
+    } else if (arr[mid] < target) {
+      left = mid + 1
+    } else if (target < arr[mid]) {
+      right = mid - 1
     }
   }
-  console.log(' end ', 'A[cur_index], A[right - 1]', A[cur_index], A[right - 1])
-  ;[A[cur_index], A[right - 1]] = [A[right - 1], A[cur_index]]
-  console.log(A.join(' '))
-  console.log('left', left, 'cur_index', cur_index, 'right', right)
-  quickSort(A, left, cur_index)
-  quickSort(A, cur_index + 1, right)
+  return false
 }
-
-let count = 0
 main(testinput)
-console.log(count)
 
 // main(require("fs").readFileSync("/dev/stdin", "utf8"));
