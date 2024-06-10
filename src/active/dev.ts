@@ -47,34 +47,28 @@ function main(inputStr: string) {
   })
   // const times = inputorderArray[2]
 
-  const searchDataBase = inputorderArray.shift()
-  const searchTargetLength: number[] = inputorderArray.shift() as number[]
-  //number[]として扱う為にアサーションをする
+  const sortTargetArray = inputorderArray.shift() as number[]
+  const targetAllay: number[] = inputorderArray.shift() as number[]
 
-  const searchTarget = inputorderArray as number[][]
-
-  const search = binarySearch(searchDataBase as number[], 1)
-
-  searchTarget.forEach((element) => {
-    console.log(binarySearch(searchDataBase as number[], element[0]))
+  sortTargetArray.sort(function(a, b) { return a - b })
+  inputorderArray.forEach((element) => {
+    const searched = binalySearch(element[0] as number, sortTargetArray)
+    console.log(sortTargetArray.length - searched)
   })
 }
 
-function binarySearch(arr: number[], target: number): boolean {
+main(testinput)
+function binalySearch(target: number, array: number[]): number {
   let left = 0
-  let right = arr.length - 1
-  while (left <= right) {
-    const mid = Math.floor((left + right) / 2)
-    if (arr[mid] === target) {
-      return true
-    } else if (arr[mid] < target) {
-      left = mid + 1
-    } else if (target < arr[mid]) {
-      right = mid - 1
+  let right = array.length -1 
+  while (left < right) {
+    const mid = Math.floor((left + right) /2)
+    if(array[mid] < target) {
+      left = mid + 1 
+    } else {
+      right = mid 
     }
   }
-  return false
+   return right
 }
-main(testinput)
-
 // main(require("fs").readFileSync("/dev/stdin", "utf8"));
