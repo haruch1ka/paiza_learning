@@ -46,40 +46,66 @@ function main(inputStr) {
     });
     // const times = inputorderArray[2]
     const sortTargetArray = inputorderArray.shift();
-    const targetAllay = inputorderArray.shift();
+    const targetAllayLength = inputorderArray.shift();
+    const targetArray = inputorderArray;
     sortTargetArray.sort((a, b) => a - b);
     // console.log(sortTargetArray)
-    inputorderArray.forEach((element) => {
-        const searched = binary_search(sortTargetArray, sortTargetArray.length, element[0]);
-        // console.log('element', element[0])
-        // console.log('searched', searched)
-        const count = sortTargetArray.length - searched;
-        if (count < 0) {
-            console.log(0);
-        }
-        else {
-            console.log(count);
-        }
+    targetArray.forEach((e) => {
+        const target = e[0];
+        // console.log('target', target)
+        const result = binary_search(sortTargetArray, target) + 1;
+        console.log(sortTargetArray.length - result);
     });
 }
-const binary_search = (A, n, k) => {
-    //(A : 数列, n : 数列のサイズ, k : 基準)
-    // 探索範囲 [left, right]
-    let left = 0;
-    let right = n;
-    // 探索範囲を狭めていく
-    while (left < right) {
-        // 探索範囲の中央
-        const mid = Math.floor((left + right) / 2); //切り下げ
-        if (A[mid] <= k) {
-            left = mid + 1;
+const binary_search = (A, target) => {
+    let ok = -1;
+    let ng = A.length;
+    // console.log('                      ')
+    // console.log('----------------------')
+    // console.log('A', A)
+    // console.log('target', target)
+    // console.log('  ')
+    while (ng - ok > 1) {
+        const mid = Math.floor((ok + ng) / 2);
+        if (is_ok(mid, target, A)) {
+            ok = mid;
+            // console.log('ok', A[ok], 'mid', mid)
         }
         else {
-            right = mid;
+            ng = mid;
+            // console.log('ng', A[ng], 'mid', mid)
         }
     }
-    // 狭め終わったらmin_iを返す
-    return right;
+    return ok;
 };
+const is_ok = (mid, target, array) => {
+    if (mid < 0)
+        return true;
+    if (mid >= array.length)
+        return false;
+    return array[mid] < target;
+};
+// const binary_search = (A: number[], n: number, k: number) => {
+//   //(A : 数列, n : 数列のサイズ, k : 基準)
+//   // 探索範囲 [left, right]
+//   let left = 0
+//   let right = n
+//   // console.log('k', k)
+//   // 探索範囲を狭めていく
+//   while (left < right) {
+//     // 探索範囲の中央
+//     const mid = Math.floor((left + right) / 2) //切り下げ
+//     // console.log('left', left, 'mid', mid, 'right', right)
+//     // console.log('A[mid]', A[mid])
+//     if (k <= A[mid]) {
+//       right = mid
+//     } else {
+//       left = mid + 1
+//     }
+//   }
+//   // console.log('----------------------')
+//   // 狭め終わったらmin_iを返す
+//   return right
+// }
 // main(testinput);
 main(require('fs').readFileSync('/dev/stdin', 'utf8'))
