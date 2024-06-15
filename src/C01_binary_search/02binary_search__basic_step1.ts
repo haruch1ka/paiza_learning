@@ -48,7 +48,8 @@ function main(inputStr: string) {
   // const times = inputorderArray[2]
 
   const sortTargetArray = inputorderArray.shift() as number[]
-  const targetAllayLength: number[] = inputorderArray.shift() as number[]
+
+  inputorderArray.shift() as number[]
   const targetArray = inputorderArray as number[][]
   sortTargetArray.sort((a, b) => a - b)
   // console.log(sortTargetArray)

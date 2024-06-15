@@ -46,7 +46,7 @@ function main(inputStr) {
     });
     // const times = inputorderArray[2]
     const sortTargetArray = inputorderArray.shift();
-    const targetAllayLength = inputorderArray.shift();
+    inputorderArray.shift();
     const targetArray = inputorderArray;
     sortTargetArray.sort((a, b) => a - b);
     // console.log(sortTargetArray)
@@ -107,5 +107,5 @@ const is_ok = (mid, target, array) => {
 //   // 狭め終わったらmin_iを返す
 //   return right
 // }
-// main(testinput);
-main(require('fs').readFileSync('/dev/stdin', 'utf8'))
+main(testinput);
+// main(require('fs').readFileSync('/dev/stdin', 'utf8'))
