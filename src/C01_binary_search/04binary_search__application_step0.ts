@@ -3,8 +3,8 @@ const testinput = `5 12
 
 function main(inputStr: string) {
   // const input = new Input(inputStr)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const lines = inputStr.split('\n')
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [n, k] = lines[0].split(' ').map(Number)
   const A = lines[1].split(' ').map(Number)
   console.log(binary_search(A, k).toFixed(20))
