@@ -50,6 +50,7 @@ function main(inputStr: string) {
   }
 
   console.log(right)
+  console.log(right)
 }
 
 main(testinput)
