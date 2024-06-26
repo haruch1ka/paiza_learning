@@ -1,6 +1,9 @@
 "use strict";
-const testinput = `23 5 7
-2 6 9 10 12 15 19`;
+const testinput = `5
+0 1 2 3 4
+4
+-3 -1 1 3
+12`;
 function main(inputStr) {
     // const input = new Input(inputStr)
     const lines = inputStr.split('\n');

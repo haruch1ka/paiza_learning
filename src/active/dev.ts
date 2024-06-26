@@ -1,55 +1,37 @@
-const testinput = `23 5 7
-2 6 9 10 12 15 19`
+const testinput = `5
+0 1 2 3 4
+4
+-3 -1 1 3
+12`
 
 function main(inputStr: string) {
-  // const input = new Input(inputStr)
   const lines = inputStr.split('\n')
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [L, n, k] = lines[0].split(' ').map(Number)
-  // console.log(L, n, k)
+
+  const [n, m, k] = [Number(lines[0]), Number(lines[2]), Number(lines[4])]
+
   let a = lines[1].split(' ').map(Number)
+  a = [-Infinity, ...a, Infinity]
 
-  a = [0, ...a, L]
-  let [left, right] = [0, L]
-  // console.log('L', L, 'n', n, 'k', k)
-  // console.log(a)
-  // console.log('left', left, 'right', right)
-  for (let i = 1; i < k + 2; i++) {
-    left = Math.max(left, a[i] - a[i - 1])
-  }
+  const b = lines[3].split(' ').map(Number)
 
-  left -= 1
-  // console.log('left', left)
-  while (right - left > 1) {
-    const mid = Math.floor((left + right) / 2)
-
-    let last_index = 0,
-      index = 0,
-      parts = 0
-    const flag = true
-    while (flag) {
-      // console.log('---------------------------------')
-      // console.log('index + 1', index + 1, 'k + 2', k + 2)
-      while (index + 1 < k + 2 && a[index + 1] - a[last_index] <= mid) {
-        index += 1
-        // console.log('diff', a[index] - a[last_index])
+  for (let i = 0; i < m; i++) {
+    console.log('b[i]', b[i])
+    let [left, right] = [-1, n + 1]
+    let mid
+    console.log('-----------------')
+    while (right - left > 1) {
+      mid = Math.floor((left + right) / 2)
+      console.log('mid', mid)
+      if (a[mid] < b[i]) {
+        left = mid
+      } else {
+        right = mid
       }
-      // console.log('---------------------------------')
-      // console.log('diff', a[index] - a[last_index], 'index', index)
-      parts += 1
-      if (index == k + 1) {
-        break
-      }
-      last_index = index
-    }
-    if (parts > n) {
-      left = mid
-    } else {
-      right = mid
     }
   }
 
-  console.log(right)
+  console.log(a, b)
+  console.log(n, m, k)
 }
 
 main(testinput)
